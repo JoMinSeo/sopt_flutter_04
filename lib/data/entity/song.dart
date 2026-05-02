@@ -1,8 +1,7 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'song.g.dart';
-
-@JsonSerializable()
+/// 도메인 모델 — 앱 전체가 사용하는 곡 표현.
+///
+/// JSON / HTTP / SharedPreferences 같은 외부 라이브러리를 모른다.
+/// 직렬화 책임은 [SongDto]가 진다.
 class Song {
   /// 고유 식별자
   final int trackId;
@@ -23,16 +22,15 @@ class Song {
   final String? artworkUrl100;
 
   /// 재생 시간(ms)
-  @JsonKey(defaultValue: 0)
   final int trackTimeMillis;
 
   /// 앨범 내 트랙 순서
   final int? trackNumber;
 
-  @JsonKey(defaultValue: false)
+  /// 즐겨찾기 여부 — 도메인 개념이며 DTO에는 존재하지 않는다.
   final bool isFavorite;
 
-  Song({
+  const Song({
     required this.trackId,
     required this.collectionId,
     required this.trackName,
@@ -41,16 +39,9 @@ class Song {
     this.artworkUrl100,
     required this.trackTimeMillis,
     this.trackNumber,
-    required this.isFavorite,
+    this.isFavorite = false,
   });
 
-  /// JSON -> [Song] 변환
-  factory Song.fromJson(Map<String, dynamic> json) => _$SongFromJson(json);
-
-  /// [Song] -> JSON 변환
-  Map<String, dynamic> toJson() => _$SongToJson(this);
-
-  /// [Song] 복사
   Song copyWith({
     int? trackId,
     int? collectionId,
