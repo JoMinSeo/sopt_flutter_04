@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sopt_flutter_04/providers/music_player_provider.dart';
+import 'package:sopt_flutter_04/providers/search_term_provider.dart';
 import 'package:sopt_flutter_04/providers/songs_provider.dart';
 import 'package:sopt_flutter_04/widgets/song_tile.dart';
 
@@ -53,6 +54,7 @@ class _SongListPageState extends ConsumerState<SongListPage> {
                   // TODO 3
                   // onSubmitted는 keyboard enter를 눌렀을때 호출됩니다.
                   // 엔터 입력 시 검색어를 변경되도록 해주세요.
+                  ref.read(searchTermProvider.notifier).setTerm(term);
                 },
               ),
             ),
